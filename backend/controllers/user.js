@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
     }
 
     const isMatch = await user.matchPassword(password);
-
+    
     if (!isMatch) {
       return res
         .status(400)
