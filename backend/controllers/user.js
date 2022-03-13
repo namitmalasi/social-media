@@ -143,3 +143,59 @@ exports.getPostOfFollowing = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// update password
+exports.updatePassword = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("+password");
+
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide new or old password",
+      });
+    }
+
+    const isMatch = await user.matchPassword(oldPassword);
+
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect old password" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ success: false, message: "Password updated" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// update profile
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    const { name, email } = req.body;
+
+    if (name) {
+      user.name = name;
+    }
+    if (email) {
+      user.email = email;
+    }
+
+    // User Avatar: TODO
+
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Profile updated" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
