@@ -4,7 +4,9 @@ const {
   likeandUnlikePost,
   deletePost,
   updateCaptions,
+  commentOnPost,
 } = require("../controllers/post");
+const { getPostOfFollowing } = require("../controllers/user");
 const { isAuthenticated } = require("../middlewares/auth");
 
 const router = express.Router();
@@ -16,4 +18,7 @@ router
   .put(isAuthenticated, updateCaptions)
   .delete(isAuthenticated, deletePost);
 
+router.route("/posts").get(isAuthenticated, getPostOfFollowing);
+
+router.route("/post/comment/:id").put(isAuthenticated, commentOnPost);
 module.exports = router;
