@@ -112,7 +112,7 @@ exports.updateCaptions = async (req, res) => {
   }
 };
 
-// add comment
+// add or update comment
 exports.commentOnPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
