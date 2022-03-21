@@ -1,5 +1,12 @@
-import { Avatar, Typography } from "@mui/material";
-import React from "react";
+import { Avatar, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  MoreVert,
+  Favorite,
+  FavoriteBorder,
+  ChatBubbleOutline,
+  DeleteOutline,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./Post.css";
 
@@ -15,9 +22,16 @@ const Post = ({
   isDelete = false,
   isAccount = false,
 }) => {
+  const [liked, setLiked] = useState(false);
+
+  const handleLike = () => {
+    setLiked(!liked);
+  };
   return (
     <div className="post">
-      <div className="postHeader"></div>
+      <div className="postHeader">
+        {isAccount?<Button><MoreVert/></Button>:null}
+      </div>
 
       <img src={postImage} alt="post" />
 
@@ -38,6 +52,33 @@ const Post = ({
         >
           {caption}
         </Typography>
+      </div>
+
+      <button
+        style={{
+          border: "none",
+          backgroundColor: "white",
+          cursor: "pointer",
+          margin: "1vmax 2vmax",
+        }}
+      >
+        <Typography>5 likes</Typography>
+      </button>
+
+      <div className="postFooter">
+        <Button onClick={handleLike}>
+          {liked ? <Favorite style={{ color: "red" }} /> : <FavoriteBorder />}
+        </Button>
+
+        <Button>
+          <ChatBubbleOutline />
+        </Button>
+
+        {isDelete ? (
+          <Button>
+            <DeleteOutline />
+          </Button>
+        ) : null}
       </div>
     </div>
   );
