@@ -6,8 +6,8 @@ const {
   updateCaptions,
   commentOnPost,
   deleteComment,
+  getPostOfFollowing,
 } = require("../controllers/post");
-const { getPostOfFollowing } = require("../controllers/user");
 const { isAuthenticated } = require("../middlewares/auth");
 
 const router = express.Router();
