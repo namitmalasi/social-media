@@ -9,6 +9,8 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./Post.css";
+import { useDispatch } from "react-redux";
+import { likePost } from "../../Actions/Post";
 
 const Post = ({
   postId,
@@ -24,13 +26,21 @@ const Post = ({
 }) => {
   const [liked, setLiked] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleLike = () => {
     setLiked(!liked);
+
+    dispatch(likePost(postId));
   };
   return (
     <div className="post">
       <div className="postHeader">
-        {isAccount?<Button><MoreVert/></Button>:null}
+        {isAccount ? (
+          <Button>
+            <MoreVert />
+          </Button>
+        ) : null}
       </div>
 
       <img src={postImage} alt="post" />

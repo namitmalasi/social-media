@@ -47,7 +47,12 @@ const Home = () => {
       <div className="homeright">
         {users && users.length > 0 ? (
           users.map((user) => (
-            <User userId={user._id} name={user.name} avatar={user.avatar.url} />
+            <User
+              key={user._id}
+              userId={user._id}
+              name={user.name}
+              avatar={user.avatar.url}
+            />
           ))
         ) : (
           <Typography>No Users yet</Typography>
