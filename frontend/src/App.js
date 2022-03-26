@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
 
   const { isAuthenticated } = useSelector((state) => state.user);
   return (
@@ -24,6 +24,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;

@@ -1,5 +1,5 @@
 import { Avatar, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MoreVert,
   Favorite,
@@ -9,8 +9,9 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./Post.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post";
+import { getPostOfFollowing } from "../../Actions/User";
 
 const Post = ({
   postId,
@@ -27,12 +28,28 @@ const Post = ({
   const [liked, setLiked] = useState(false);
 
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     setLiked(!liked);
 
-    dispatch(likePost(postId));
+    await dispatch(likePost(postId));
+
+    if (isAccount) {
+      console.log(`Bring me my post`);
+    } else {
+      dispatch(getPostOfFollowing());
+    }
   };
+
+  useEffect(() => {
+    likes.forEach((item) => {
+      if (item._id === user._id) {
+        setLiked(true);
+      }
+    });
+  }, [likes, user._id]);
+
   return (
     <div className="post">
       <div className="postHeader">
@@ -72,7 +89,7 @@ const Post = ({
           margin: "1vmax 2vmax",
         }}
       >
-        <Typography>5 likes</Typography>
+        <Typography>{likes.length} likes</Typography>
       </button>
 
       <div className="postFooter">
