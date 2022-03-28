@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Post from "../Post/Post";
-import User from "../User/User";
+import User from "../User/User";  
 import "./Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, getPostOfFollowing } from "../../Actions/User";
@@ -8,6 +8,7 @@ import Loader from "../Loader/Loader";
 import { Typography } from "@mui/material";
 import { useAlert } from "react-alert";
 const Home = () => {
+
   const dispatch = useDispatch();
 
   const { error: likeError, message } = useSelector((state) => state.like);
