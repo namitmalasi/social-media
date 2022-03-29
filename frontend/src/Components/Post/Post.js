@@ -12,7 +12,9 @@ import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post";
 import { getPostOfFollowing } from "../../Actions/User";
+import { addCommentOnPost } from "../../Actions/Post";
 import User from "../User/User";
+import CommentCard from "../CommentCard/CommentCard";
 
 const Post = ({
   postId,
@@ -28,6 +30,8 @@ const Post = ({
 }) => {
   const [liked, setLiked] = useState(false);
   const [likesUser, setLikesUser] = useState(false);
+  const [commentValue, setCommentValue] = useState("");
+  const [commentToggle, setCommentToggle] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
@@ -50,6 +54,19 @@ const Post = ({
       }
     });
   }, [likes, user._id]);
+
+  const addCommentHandler = async (e) => {
+    console.log("Add Comment");
+    e.preventDefault();
+
+    await dispatch(addCommentOnPost(postId, commentValue));
+
+    if (isAccount) {
+      console.log(`Bring me my post`);
+    } else {
+      dispatch(getPostOfFollowing());
+    }
+  };
 
   return (
     <div className="post">
@@ -100,7 +117,7 @@ const Post = ({
           {liked ? <Favorite style={{ color: "red" }} /> : <FavoriteBorder />}
         </Button>
 
-        <Button>
+        <Button onClick={() => setCommentToggle(!commentToggle)}>
           <ChatBubbleOutline />
         </Button>
 
@@ -113,15 +130,53 @@ const Post = ({
       <Dialog open={likesUser} onClose={() => setLikesUser(!likesUser)}>
         <div className="DialogBox">
           <Typography variant="h4">Liked By</Typography>
+        </div>
+        {likes.map((like) => (
+          <User
+            key={like._id}
+            userId={like._id}
+            name={like.name}
+            avatar={like.avatar.url}
+          />
+        ))}
+      </Dialog>
 
-          {likes.map((like) => (
-            <User
-              key={like._id}
-              userId={like._id}
-              name={like.name}
-              avatar={like.avatar.url}
+      <Dialog
+        open={commentToggle}
+        onClose={() => setCommentToggle(!commentToggle)}
+      >
+        <div className="DialogBox">
+          <Typography variant="h4">Comments</Typography>
+
+          <form className="commentForm" onSubmit={addCommentHandler}>
+            <input
+              type="text"
+              value={commentValue}
+              onChange={(e) => setCommentValue(e.target.value)}
+              placeholder="Comment here"
+              required
             />
-          ))}
+
+            <Button type="submit" variant="contained">
+              Add
+            </Button>
+          </form>
+
+          {comments.length > 0 ? (
+            comments.map((item) => (
+              <CommentCard
+                userId={item.user._id}
+                name={item.user.name}
+                avatar={item.user.avatar}
+                comment={item.comment}
+                commentId={item._id}
+                postId={postId}
+                isAccount={isAccount}
+              />
+            ))
+          ) : (
+            <Typography>No comments yet</Typography>
+          )}
         </div>
       </Dialog>
     </div>

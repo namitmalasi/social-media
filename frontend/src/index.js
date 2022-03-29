@@ -11,7 +11,7 @@ const options = {
   timeout: 3000,
   transition: transitions.SCALE,
 };
-    
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -23,3 +23,4 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+

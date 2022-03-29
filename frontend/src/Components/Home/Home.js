@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import { useAlert } from "react-alert";
 const Home = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
 
   const { error: likeError, message } = useSelector((state) => state.like);
   const alert = useAlert();
