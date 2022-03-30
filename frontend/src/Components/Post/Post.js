@@ -165,6 +165,7 @@ const Post = ({
           {comments.length > 0 ? (
             comments.map((item) => (
               <CommentCard
+                key={item._id}
                 userId={item.user._id}
                 name={item.user.name}
                 avatar={item.user.avatar}
