@@ -44,7 +44,9 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email })
+      .select("+password")
+      .populate("posts followers following");
 
     if (!user) {
       return res

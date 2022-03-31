@@ -8,6 +8,7 @@ import { Avatar, Button, Dialog, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import User from "../User/User";
+import { logoutUser } from "../../Actions/User";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const Account = () => {
 
   const [followersToggle, setFollowersToggle] = useState(false);
   const [followingToggle, setFollowingToggle] = useState(false);
+
+  const logoutHandler = async() => {
+    await dispatch(logoutUser());
+    alert.success("Logged out Successfully")
+  };
 
   useEffect(() => {
     dispatch(getMyPosts());
@@ -92,7 +98,9 @@ const Account = () => {
           <Typography>{user.posts.length}</Typography>
         </div>
 
-        <Button variant="contained">Logout</Button>
+        <Button variant="contained" onClick={logoutHandler}>
+          Logout
+        </Button>
 
         <Link to="/update/profile">Edit Profile</Link>
         <Link to="/update/password">Update Password</Link>
