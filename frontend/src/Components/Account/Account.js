@@ -21,9 +21,9 @@ const Account = () => {
   const [followersToggle, setFollowersToggle] = useState(false);
   const [followingToggle, setFollowingToggle] = useState(false);
 
-  const logoutHandler = async() => {
+  const logoutHandler = async () => {
     await dispatch(logoutUser());
-    alert.success("Logged out Successfully")
+    alert.success("Logged out Successfully");
   };
 
   useEffect(() => {
@@ -64,6 +64,8 @@ const Account = () => {
               ownerId={post.owner._id}
               ownerName={post.owner.name}
               ownerImage={post.owner.avatar.url}
+              isAccount={true}
+              isDelete={true}
             />
           ))
         ) : (

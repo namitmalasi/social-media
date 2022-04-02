@@ -8,7 +8,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 const options = {
   position: positions.BOTTOM_CENTER,
-  timeout: 3000,
+  timeout: 8000,
   transition: transitions.SCALE,
 };
 
@@ -23,4 +23,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-

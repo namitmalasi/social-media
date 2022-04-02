@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
-import { likePost } from "../../Actions/Post";
+import { getMyPosts, likePost } from "../../Actions/Post";
 import { getPostOfFollowing } from "../../Actions/User";
 import { addCommentOnPost } from "../../Actions/Post";
 import User from "../User/User";
@@ -41,7 +41,7 @@ const Post = ({
     await dispatch(likePost(postId));
 
     if (isAccount) {
-      console.log(`Bring me my post`);
+      dispatch(getMyPosts());
     } else {
       dispatch(getPostOfFollowing());
     }
@@ -62,7 +62,7 @@ const Post = ({
     await dispatch(addCommentOnPost(postId, commentValue));
 
     if (isAccount) {
-      console.log(`Bring me my post`);
+      dispatch(getMyPosts());
     } else {
       dispatch(getPostOfFollowing());
     }

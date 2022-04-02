@@ -62,3 +62,29 @@ export const getMyPosts = () => async (dispatch) => {
     });
   }
 };
+
+export const createNewPost = (image, caption) => async (dispatch) => {
+  try {
+    dispatch({ type: "newPostRequest" });
+
+    const { data } = await axios.post(
+      `/api/v1/post/upload`,
+      {
+        caption,
+        image,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({ type: "newPostSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: "newPostFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
