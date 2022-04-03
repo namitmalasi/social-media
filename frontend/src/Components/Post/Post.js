@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyPosts, likePost } from "../../Actions/Post";
+import { deletePost, getMyPosts, likePost } from "../../Actions/Post";
 import { getPostOfFollowing } from "../../Actions/User";
 import { addCommentOnPost, updatePost } from "../../Actions/Post";
 import User from "../User/User";
@@ -77,6 +77,11 @@ const Post = ({
     dispatch(getMyPosts());
   };
 
+  const deletePostHandler = async () => {
+    await dispatch(deletePost(postId));
+    dispatch(getMyPosts());
+  };
+
   return (
     <div className="post">
       <div className="postHeader">
@@ -131,7 +136,7 @@ const Post = ({
         </Button>
 
         {isDelete ? (
-          <Button>
+          <Button onClick={deletePostHandler}>
             <DeleteOutline />
           </Button>
         ) : null}
