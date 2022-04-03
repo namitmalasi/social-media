@@ -12,7 +12,7 @@ import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyPosts, likePost } from "../../Actions/Post";
 import { getPostOfFollowing } from "../../Actions/User";
-import { addCommentOnPost } from "../../Actions/Post";
+import { addCommentOnPost, updatePost } from "../../Actions/Post";
 import User from "../User/User";
 import CommentCard from "../CommentCard/CommentCard";
 
@@ -32,6 +32,9 @@ const Post = ({
   const [likesUser, setLikesUser] = useState(false);
   const [commentValue, setCommentValue] = useState("");
   const [commentToggle, setCommentToggle] = useState(false);
+  const [captionValue, setCaptionValue] = useState(caption);
+  const [captionToggle, setCaptionToggle] = useState(false);
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
@@ -68,11 +71,17 @@ const Post = ({
     }
   };
 
+  const updateCaptionHandler = (e) => {
+    e.preventDefault();
+    dispatch(updatePost(captionValue, postId));
+    dispatch(getMyPosts());
+  };
+
   return (
     <div className="post">
       <div className="postHeader">
         {isAccount ? (
-          <Button>
+          <Button onClick={() => setCaptionToggle(!captionToggle)}>
             <MoreVert />
           </Button>
         ) : null}
@@ -178,6 +187,29 @@ const Post = ({
           ) : (
             <Typography>No comments yet</Typography>
           )}
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={captionToggle}
+        onClose={() => setCaptionToggle(!captionToggle)}
+      >
+        <div className="DialogBox">
+          <Typography variant="h4">Update Caption</Typography>
+
+          <form className="commentForm" onSubmit={updateCaptionHandler}>
+            <input
+              type="text"
+              value={captionValue}
+              onChange={(e) => setCaptionValue(e.target.value)}
+              placeholder="Caption here"
+              required
+            />
+
+            <Button type="submit" variant="contained">
+              Update
+            </Button>
+          </form>
         </div>
       </Dialog>
     </div>
