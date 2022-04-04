@@ -8,6 +8,7 @@ import { loadUser } from "./Actions/User";
 import Home from "./Components/Home/Home";
 import Account from "./Components/Account/Account";
 import NewPost from "./Components/NewPost/NewPost";
+import Register from "./Components/Register/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,10 @@ function App() {
         <Route
           path="/account"
           element={isAuthenticated ? <Account /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={isAuthenticated ? <Account /> : <Register />}
         />
         <Route
           path="/newpost"

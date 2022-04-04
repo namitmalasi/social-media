@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, getMyPosts, likePost } from "../../Actions/Post";
-import { getPostOfFollowing } from "../../Actions/User";
+import { getPostOfFollowing, loadUser } from "../../Actions/User";
 import { addCommentOnPost, updatePost } from "../../Actions/Post";
 import User from "../User/User";
 import CommentCard from "../CommentCard/CommentCard";
@@ -41,7 +41,7 @@ const Post = ({
   const handleLike = async () => {
     setLiked(!liked);
 
-    await dispatch(likePost(postId));
+    await dispatch(likePost(postId)); 
 
     if (isAccount) {
       dispatch(getMyPosts());
@@ -80,6 +80,7 @@ const Post = ({
   const deletePostHandler = async () => {
     await dispatch(deletePost(postId));
     dispatch(getMyPosts());
+    dispatch(loadUser())
   };
 
   return (
