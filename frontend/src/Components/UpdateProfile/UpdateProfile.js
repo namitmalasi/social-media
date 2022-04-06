@@ -96,6 +96,7 @@ const UpdateProfile = () => {
         <Button disabled={updateLoading} type="submit">
           Update
         </Button>
+        
       </form>
     </div>
   );
