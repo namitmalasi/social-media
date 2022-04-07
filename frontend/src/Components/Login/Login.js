@@ -14,6 +14,8 @@ const Login = () => {
   const alert = useAlert();
 
   const { error } = useSelector((state) => state.user);
+  const { message } = useSelector((state) => state.like);
+
   const loginHandler = (e) => {
     e.preventDefault();
 
@@ -25,7 +27,12 @@ const Login = () => {
       alert.error(error);
       dispatch({ type: "clearErrors" });
     }
-  }, [dispatch, alert, error]);
+
+    if (message) {
+      alert.success(message);
+      dispatch({ type: "clearMessage" });
+    }
+  }, [dispatch, alert, error, message]);
   return (
     <div className="login">
       <form className="loginForm" onSubmit={loginHandler}>
