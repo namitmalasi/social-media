@@ -30,7 +30,7 @@ const Login = () => {
 
     if (message) {
       alert.success(message);
-      dispatch({ type: "clearMessage" });
+      dispatch({ type: "clearMessage" }); 
     }
   }, [dispatch, alert, error, message]);
   return (
@@ -64,6 +64,7 @@ const Login = () => {
         <Link to="/register">
           <Typography>New User?</Typography>
         </Link>
+        
       </form>
     </div>
   );

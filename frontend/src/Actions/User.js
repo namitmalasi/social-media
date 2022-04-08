@@ -165,3 +165,26 @@ export const deleteMyProfile = () => async (dispatch) => {
     });
   }
 };
+
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: "forgotPasswordRequest" });
+
+    const { data } = await axios.post(
+      "/api/v1/forgot/password",
+      { email },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({ type: "forgotPasswordSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: "forgotPasswordFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
