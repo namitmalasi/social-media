@@ -13,6 +13,7 @@ import UpdateProfile from "./Components/UpdateProfile/UpdateProfile";
 import UpdatePassword from "./Components/UpdatePassword/UpdatePassword";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
+import UserProfile from "./Components/UserProfile/UserProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,11 @@ function App() {
         <Route
           path="/password/reset/:token"
           element={isAuthenticated ? <UpdatePassword /> : <ResetPassword />}
+        />
+
+        <Route
+          path="/user/:id"
+          element={isAuthenticated ? <UserProfile /> : <Login />}
         />
       </Routes>
     </Router>

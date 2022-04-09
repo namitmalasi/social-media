@@ -247,6 +247,33 @@ exports.deleteMyProfile = async (req, res) => {
       follows.followers.splice(index, 1);
       await follows.save();
     }
+
+    // removing all comments of the user from all posts
+    const allPosts = await Post.find();
+
+    for (let i = 0; i < allPosts.length; i++) {
+      const post = await Post.findById(allPosts[i]._id);
+
+      for (let j = 0; j < post.comments.length; j++) {
+        if (post.comments[j].user === userId) {
+          post.comments.splice(j, 1);
+        }
+      }
+      await post.save();
+    }
+
+    // removing all likes of the user from all posts
+
+    for (let i = 0; i < allPosts.length; i++) {
+      const post = await Post.findById(allPosts[i]._id);
+
+      for (let j = 0; j < post.likes.length; j++) {
+        if (post.likes[j] === userId) {
+          post.likes.splice(j, 1);
+        }
+      }
+      await post.save();
+    }
     res.status(200).json({ success: true, message: "Profile Deleted" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -374,6 +401,26 @@ exports.resetPassword = async (req, res) => {
 exports.getMyPosts = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
+    const posts = [];
+
+    for (let i = 0; i < user.posts.length; i++) {
+      const post = await Post.findById(user.posts[i]).populate(
+        "likes comments.user owner"
+      );
+
+      posts.push(post);
+    }
+
+    res.status(200).json({ success: true, posts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// get user posts
+exports.getUserPost = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
     const posts = [];
 
     for (let i = 0; i < user.posts.length; i++) {

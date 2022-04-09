@@ -128,3 +128,33 @@ export const deletePost = (id) => async (dispatch) => {
     });
   }
 };
+
+export const getUserPosts = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "userPostsRequest" });
+
+    const { data } = await axios.get(`/api/v1/userposts/${id}`);
+
+    dispatch({ type: "userPostsSuccess", payload: data.posts });
+  } catch (error) {
+    dispatch({
+      type: "userPostsFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getUserProfile = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "userProfileRequest" });
+
+    const { data } = await axios.get(`/api/v1/user/${id}`);
+
+    dispatch({ type: "userProfileSuccess", payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: "userProfileFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
