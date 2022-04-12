@@ -49,6 +49,8 @@ const UserProfile = () => {
       user.followers.forEach((item) => {
         if (item._id === me._id) {
           setFollowing(true);
+        } else {
+          setFollowing(false);
         }
       });
     }
@@ -57,6 +59,7 @@ const UserProfile = () => {
   const followHandler = () => {
     setFollowing(!following);
     dispatch(followAndUnfollowUser(user._id));
+    dispatch(getUserProfile(params.id));
   };
 
   useEffect(() => {

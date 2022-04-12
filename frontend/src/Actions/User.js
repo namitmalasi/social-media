@@ -52,17 +52,22 @@ export const getPostOfFollowing = () => async (dispatch) => {
 };
 
 // get all users
-export const getAllUsers = () => async (dispatch) => {
-  try {
-    dispatch({ type: "allUsersRequest" });
+export const getAllUsers =
+  (name = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: "allUsersRequest" });
 
-    const { data } = await axios.get("/api/v1/users");
+      const { data } = await axios.get(`/api/v1/users/?name=${name}`);
 
-    dispatch({ type: "allUsersSuccess", payload: data.users });
-  } catch (error) {
-    dispatch({ type: "allUsersFailure", payload: error.response.data.message });
-  }
-};
+      dispatch({ type: "allUsersSuccess", payload: data.users });
+    } catch (error) {
+      dispatch({
+        type: "allUsersFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // logout user
 export const logoutUser = () => async (dispatch) => {
@@ -193,7 +198,8 @@ export const resetPassword = (token, password) => async (dispatch) => {
   try {
     dispatch({ type: "resetPasswordRequest" });
 
-    const { data } = await axios.put(`/api/v1/password/reset/${token}`,
+    const { data } = await axios.put(
+      `/api/v1/password/reset/${token}`,
       { password },
       {
         headers: {

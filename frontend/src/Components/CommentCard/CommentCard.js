@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./CommentCard.css";
 import { Delete } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCommentOnPost } from "../../Actions/Post";
+import { deleteCommentOnPost, getMyPosts } from "../../Actions/Post";
 import { getPostOfFollowing } from "../../Actions/User";
 
 const CommentCard = ({
@@ -23,7 +23,7 @@ const CommentCard = ({
     await dispatch(deleteCommentOnPost(postId, commentId));
 
     if (isAccount) {
-      console.log("bring me my posts");
+      dispatch(getMyPosts());
     } else {
       dispatch(getPostOfFollowing());
     }

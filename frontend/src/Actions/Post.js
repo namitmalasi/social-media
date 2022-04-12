@@ -36,7 +36,7 @@ export const deleteCommentOnPost = (id, commentId) => async (dispatch) => {
     dispatch({ type: "deleteCommentRequest" });
 
     const { data } = await axios.put(`/api/v1/post/comment/${id}`, {
-      data: commentId,
+      data: { commentId },
     });
 
     dispatch({ type: "deleteCommentSuccess", payload: data.message });
