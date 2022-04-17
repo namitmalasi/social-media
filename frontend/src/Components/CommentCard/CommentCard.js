@@ -47,7 +47,7 @@ const CommentCard = ({
         </Button>
       ) : null}
     </div>
-  );
+  );  
 };
 
 export default CommentCard;

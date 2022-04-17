@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import User from "../User/User";
 
+
 const UserProfile = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
