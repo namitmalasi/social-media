@@ -8,7 +8,7 @@ import { Avatar, Button, Dialog, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import User from "../User/User";
-import { logoutUser, deleteMyProfile } from "../../Actions/User";
+import { logoutUser, deleteMyProfile, loadUser } from "../../Actions/User";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Account = () => {
     alert.success("Logged out Successfully");
   };
 
-  const deleteProfileHandler = async() => {
+  const deleteProfileHandler = async () => {
     await dispatch(deleteMyProfile());
     dispatch(logoutUser());
   };
