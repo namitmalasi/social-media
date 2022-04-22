@@ -10,6 +10,6 @@ cloudinary.config({
   api_secret: "-g1IXDqHZRAcDFWC1NAphh_iMac",
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log(`Server is running at port :${process.env.PORT}`);
 });
